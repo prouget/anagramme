@@ -3,15 +3,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 css = """
+h2 {
+    color: #555;
+}
+
 .link {
     text-decoration: none;
     color: #000;
-}
-
-.link:hover {
-    text-decoration: underline;
-    font-style: italic;
-    color: #fff;
 }
 """
 
@@ -107,7 +105,6 @@ class Ui_MainWindow(object):
             self.dict_ord[len(self.mot)].append(self.mot)
             self.mot = self.fichier.readline()
         self.fichier.close()
-        print('dico')
         return self.dict_ord
 
     def lettres_multiples_ok(self, mot, tirage):
@@ -123,7 +120,6 @@ class Ui_MainWindow(object):
         self.longueur_mot = int(self.spinBox.text())
         self.solution= []
         self.set_tirage = set(tirage)
-        print('set : ' + str(self.set_tirage))
         
         while self.longueur_mot > 0:
             for mot in dico[self.longueur_mot]:
@@ -135,27 +131,22 @@ class Ui_MainWindow(object):
             if self.solution != [] or self.longueur_mot==1:
                 return self.solution, self.longueur_mot
             else:
-                self.solution = []
-            self.longueur_mot -= 1
+                self.longueur_mot -= 1
 
     def jeu(self):
-        print("jeu")
         dico = self.dictionnaire_ordonne()
-        self.len_tirage = self.lineEdit.text()
+        self.len_tirage = self.lineEdit.text().lower()
         self.solution, self.longueur = self.trouver_plus_long_mot(dico, self.len_tirage)
         a = str(len(self.solution))
+
+        # AFFICHAGE DES RESULTATS
         self.textBrowser.setOpenExternalLinks(True)
-        if self.solution == []:
-            self.textBrowser.setText("Pas de solution")
-            print('Pas de mot trouvé !')
-            self.solution = []
-        else:
-            for mot in self.solution:
-                self.cursor.insertHtml('<h2><a class="link" href="https://fr.wiktionary.org/wiki/{}">{} - </a></h2>'.format(mot, mot))
-            # self.plainTextEdit.setPlainText(', '.join(self.solution))
-            self.label_4.setText(a + " mots")
-            print(self.solution)
-            self.solution = []
+        self.textBrowser.clear()
+        self.cursor.insertHtml('<h2>Mots de {} lettres : <br></h2>'.format(self.longueur_mot))
+        for mot in self.solution:
+            self.cursor.insertHtml('<h2><a class="link" href="https://fr.wiktionary.org/wiki/{}">{}</a> - </h2>'.format(mot, mot))
+        self.label_4.setText(a + " mots")
+        self.solution = []
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
