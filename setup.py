@@ -4,5 +4,6 @@ setup(
     name = "ProdesMots",
     version = "1.0.1",
     description = "recherche de mots par dictionnaire",
-    executables = [Executable("Anagramme.py")],
+    executables = [Executable("ProdesMots.py")],
 )
+####################################################

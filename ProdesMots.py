@@ -144,7 +144,7 @@ class Ui_MainWindow(object):
         self.textBrowser.clear()
         self.cursor.insertHtml('<h2>Mots de {} lettres : <br></h2>'.format(self.longueur_mot))
         for mot in self.solution:
-            self.cursor.insertHtml('<h2><a class="link" href="https://fr.wiktionary.org/wiki/{}">{}</a> - </h2>'.format(mot, mot))
+            self.cursor.insertHtml('<h2><a class="link" href="https://fr.wiktionary.org/wiki/{}">{}</a> | </h2>'.format(mot, mot))
         self.label_4.setText(a + " mots")
         self.solution = []
 
